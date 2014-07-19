@@ -26,7 +26,7 @@ Currently Spring Security SAML module doesn't not provide a starter for Spring B
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto://dev@vdenotaris.com))
 - **Website:** [vdenotaris.com](http://vdenotaris.com)
 
-Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting.
+Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
 ###License
 
