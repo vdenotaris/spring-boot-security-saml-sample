@@ -1,8 +1,6 @@
 Spring Boot sample Service Provider by using Spring Security SAML extension
 ====================
 
----------
-
 ##References
 
 ####Spring Boot
