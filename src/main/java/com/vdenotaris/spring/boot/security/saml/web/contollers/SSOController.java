@@ -55,7 +55,7 @@ public class SSOController {
 				model.addAttribute("idps", idps);
 				return "saml/idpselection";
 			} else {
-				LOG.warn("Direct access to '/idpSelection' route are not allowed");
+				LOG.warn("Direct accesses to '/idpSelection' route are not allowed");
 				return "redirect:/";
 			}
 		}
