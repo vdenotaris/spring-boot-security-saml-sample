@@ -244,7 +244,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public MetadataGenerator metadataGenerator() {
         MetadataGenerator metadataGenerator = new MetadataGenerator();
-        metadataGenerator.setEntityId("urn:com:vdenotaris:spring:boot:saml:web");
+        metadataGenerator.setEntityId("urn:com:vdenotaris:spring:boot:saml:web:sp");
         metadataGenerator.setSignMetadata(false);
         return metadataGenerator;
     }
@@ -338,7 +338,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         List<SecurityFilterChain> chains = new ArrayList<SecurityFilterChain>();
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/login/**"),
                 samlEntryPoint()));
-        chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/logout"),
+        chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/logout/**"),
                 samlLogoutFilter()));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/metadata/**"),
                 metadataDisplayFilter()));

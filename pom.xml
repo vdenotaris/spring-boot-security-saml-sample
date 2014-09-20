@@ -4,7 +4,6 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.vdenotaris.spring</groupId>
-	<artifactId>spring-boot-security-saml-sample</artifactId>
 	<version>1.0.0.FINAL</version>
 	<packaging>war</packaging>
 
@@ -33,10 +32,11 @@
 	</contributors>
 
 	<properties>
-		<start-class>com.vdenotaris.spring.sp.Application</start-class>
+		<start-class>com.vdenotaris.spring.boot.security.saml.web.Application</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.7</java.version>
+				<java.version>1.8</java.version>
+		<spring.platform.version>1.0.2.RELEASE</spring.platform.version>
 	</properties>
 
 	<parent>
@@ -46,7 +46,6 @@
 	</parent>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -99,7 +98,18 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
+	<artifactId>platform-showroom</artifactId>
 </project>
