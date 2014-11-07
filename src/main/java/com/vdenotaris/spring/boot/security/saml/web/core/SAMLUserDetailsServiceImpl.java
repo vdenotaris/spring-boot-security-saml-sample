@@ -58,6 +58,4 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 		return userDetails;
 	}
 	
-	
-	
 }

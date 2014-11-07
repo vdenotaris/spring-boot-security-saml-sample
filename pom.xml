@@ -3,10 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<artifactId>spring-boot-security-saml-sample</artifactId>
 	<groupId>com.vdenotaris.spring</groupId>
 	<version>1.0.0.FINAL</version>
 	<packaging>war</packaging>
 
+	<!-- Project description -->
 	<name>Spring Boot and Spring Security SAML integration sample</name>
 	<description>Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.4.0) and Spring Security SAML Extention (1.0.0.RC2), by defining an annotation-based configuration (Java Configuration). Thymeleaf (2.1.1) is also used as template engine.</description>
 	<url>https://github.com/vdenotaris</url>
@@ -31,42 +33,56 @@
 		</contributor>
 	</contributors>
 
+	<!-- Project properties -->
 	<properties>
 		<start-class>com.vdenotaris.spring.boot.security.saml.web.Application</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-				<java.version>1.8</java.version>
+		<java.version>1.8</java.version>
 		<spring.platform.version>1.0.2.RELEASE</spring.platform.version>
+		<spring.saml.version>1.0.0.RELEASE</spring.saml.version>
 	</properties>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.1.4.RELEASE</version>
-	</parent>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Platform Dependency Manager -->
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>${spring.platform.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security.extensions</groupId>
-			<artifactId>spring-security-saml2-core</artifactId>
-			<version>1.0.0.RC2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>1.4.01</version>
+			<groupId>org.springframework.security.extensions</groupId>
+			<artifactId>spring-security-saml2-core</artifactId>
+			<version>${spring.saml.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -111,5 +127,4 @@
 		</plugins>
 	</build>
 
-	<artifactId>platform-showroom</artifactId>
 </project>

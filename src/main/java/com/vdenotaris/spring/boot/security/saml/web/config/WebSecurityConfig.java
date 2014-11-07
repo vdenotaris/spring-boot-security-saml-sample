@@ -17,10 +17,10 @@
 package com.vdenotaris.spring.boot.security.saml.web.config;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -28,12 +28,12 @@ import org.apache.velocity.app.VelocityEngine;
 import org.opensaml.saml2.metadata.provider.HTTPMetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
+import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,11 +54,22 @@ import org.springframework.security.saml.context.SAMLContextProviderImpl;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
 import org.springframework.security.saml.metadata.CachingMetadataManager;
+import org.springframework.security.saml.metadata.ExtendedMetadata;
+import org.springframework.security.saml.metadata.ExtendedMetadataDelegate;
 import org.springframework.security.saml.metadata.MetadataDisplayFilter;
 import org.springframework.security.saml.metadata.MetadataGenerator;
 import org.springframework.security.saml.metadata.MetadataGeneratorFilter;
 import org.springframework.security.saml.parser.ParserPoolHolder;
+import org.springframework.security.saml.processor.HTTPArtifactBinding;
+import org.springframework.security.saml.processor.HTTPPAOS11Binding;
+import org.springframework.security.saml.processor.HTTPPostBinding;
+import org.springframework.security.saml.processor.HTTPRedirectDeflateBinding;
+import org.springframework.security.saml.processor.HTTPSOAP11Binding;
+import org.springframework.security.saml.processor.SAMLBinding;
+import org.springframework.security.saml.processor.SAMLProcessorImpl;
 import org.springframework.security.saml.util.VelocityFactory;
+import org.springframework.security.saml.websso.ArtifactResolutionProfile;
+import org.springframework.security.saml.websso.ArtifactResolutionProfileImpl;
 import org.springframework.security.saml.websso.SingleLogoutProfile;
 import org.springframework.security.saml.websso.SingleLogoutProfileImpl;
 import org.springframework.security.saml.websso.WebSSOProfile;
@@ -85,21 +96,20 @@ import com.vdenotaris.spring.boot.security.saml.web.core.SAMLUserDetailsServiceI
 @Configuration
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ImportResource("classpath:/saml/samlBindings.xml")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Autowired
     private SAMLUserDetailsServiceImpl samlUserDetailsServiceImpl;
     
     @Bean
-    public HTTPMetadataProvider metadataProvider()
-            throws MetadataProviderException {
-        String metadataURL = "http://idp.ssocircle.com/idp-meta.xml";
-        final Timer backgroundTaskTimer = new Timer(true);
-        HTTPMetadataProvider provider = 
-                new HTTPMetadataProvider(backgroundTaskTimer, httpClient(), metadataURL);
-        provider.setParserPool(parserPool());
-        return provider;
+    @Qualifier("idp-ssocircle")
+    public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() throws MetadataProviderException {	
+    	@SuppressWarnings({ "deprecation"})
+    	HTTPMetadataProvider httpMetadataProvider 
+    		= new HTTPMetadataProvider("http://idp.ssocircle.com/idp-meta.xml", 5000);
+    	httpMetadataProvider.setParserPool(parserPool());
+    	ExtendedMetadataDelegate extendedMetadataDelegate = new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
+    	return extendedMetadataDelegate;
     }
  
     // IDP Metadata configuration - paths to metadata of IDPs in circle of trust
@@ -109,7 +119,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("metadata")
     public CachingMetadataManager metadata() throws MetadataProviderException {
         List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
-        providers.add(metadataProvider());
+        providers.add(ssoCircleExtendedMetadataProvider());
         return new CachingMetadataManager(providers);
     }
      
@@ -239,13 +249,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
         return idpDiscovery;
     }
+    
+    // Setup advanced info about metadata
+    @Bean
+    public ExtendedMetadata extendedMetadata() {
+    	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
+    	extendedMetadata.setIdpDiscoveryEnabled(true);
+    	return extendedMetadata;
+    }
  
     // Filter automatically generates default SP metadata
     @Bean
     public MetadataGenerator metadataGenerator() {
         MetadataGenerator metadataGenerator = new MetadataGenerator();
-        metadataGenerator.setEntityId("urn:com:vdenotaris:spring:boot:saml:web:sp");
-        metadataGenerator.setSignMetadata(false);
+        metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
+        metadataGenerator.setExtendedMetadata(extendedMetadata());
+        metadataGenerator.setIncludeDiscoveryExtension(false);
         return metadataGenerator;
     }
  
@@ -332,6 +351,53 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new LogoutHandler[] { logoutHandler() },
                 new LogoutHandler[] { logoutHandler() });
     }
+    
+    @Bean
+    public HTTPSOAP11Binding soapBinding() {
+        return new HTTPSOAP11Binding(parserPool());
+    }
+	
+    private ArtifactResolutionProfile artifactResolutionProfile() {
+        final ArtifactResolutionProfileImpl artifactResolutionProfile = new ArtifactResolutionProfileImpl(httpClient());
+        artifactResolutionProfile.setProcessor(new SAMLProcessorImpl(soapBinding()));
+        return artifactResolutionProfile;
+    }
+    
+    @Bean
+    public HTTPArtifactBinding artifactBinding(ParserPool parserPool, VelocityEngine velocityEngine) {
+        return new HTTPArtifactBinding(parserPool, velocityEngine, artifactResolutionProfile());
+    }
+ 
+    @Bean
+    public HTTPPostBinding httpPostBinding() {
+    	return new HTTPPostBinding(parserPool(), velocityEngine());
+    }
+    
+    @Bean
+    public HTTPRedirectDeflateBinding httpRedirectDeflateBinding() {
+    	return new HTTPRedirectDeflateBinding(parserPool());
+    }
+    
+    @Bean
+    public HTTPSOAP11Binding httpSOAP11Binding() {
+    	return new HTTPSOAP11Binding(parserPool());
+    }
+    
+    @Bean
+    public HTTPPAOS11Binding httpPAOS11Binding() {
+    	return new HTTPPAOS11Binding(parserPool());
+    }
+    
+	@Bean
+	public SAMLProcessorImpl processor() {
+		Collection<SAMLBinding> bindings = new ArrayList<SAMLBinding>();
+		bindings.add(httpRedirectDeflateBinding());
+		bindings.add(httpPostBinding());
+		bindings.add(artifactBinding(parserPool(), velocityEngine()));
+		bindings.add(httpSOAP11Binding());
+		bindings.add(httpPAOS11Binding());
+		return new SAMLProcessorImpl(bindings);
+	}
      
     @Bean
     public FilterChainProxy samlFilter() throws Exception {
