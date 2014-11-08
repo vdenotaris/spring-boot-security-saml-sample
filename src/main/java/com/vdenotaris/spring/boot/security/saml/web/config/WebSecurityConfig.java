@@ -24,6 +24,8 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.opensaml.saml2.metadata.provider.HTTPMetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
@@ -32,6 +34,7 @@ import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -52,6 +55,7 @@ import org.springframework.security.saml.SAMLProcessingFilter;
 import org.springframework.security.saml.SAMLWebSSOHoKProcessingFilter;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
 import org.springframework.security.saml.key.JKSKeyManager;
+import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
 import org.springframework.security.saml.metadata.CachingMetadataManager;
 import org.springframework.security.saml.metadata.ExtendedMetadata;
@@ -67,6 +71,8 @@ import org.springframework.security.saml.processor.HTTPRedirectDeflateBinding;
 import org.springframework.security.saml.processor.HTTPSOAP11Binding;
 import org.springframework.security.saml.processor.SAMLBinding;
 import org.springframework.security.saml.processor.SAMLProcessorImpl;
+import org.springframework.security.saml.trust.httpclient.TLSProtocolConfigurer;
+import org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory;
 import org.springframework.security.saml.util.VelocityFactory;
 import org.springframework.security.saml.websso.ArtifactResolutionProfile;
 import org.springframework.security.saml.websso.ArtifactResolutionProfileImpl;
@@ -100,28 +106,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Autowired
     private SAMLUserDetailsServiceImpl samlUserDetailsServiceImpl;
-    
-    @Bean
-    @Qualifier("idp-ssocircle")
-    public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() throws MetadataProviderException {	
-    	@SuppressWarnings({ "deprecation"})
-    	HTTPMetadataProvider httpMetadataProvider 
-    		= new HTTPMetadataProvider("http://idp.ssocircle.com/idp-meta.xml", 5000);
-    	httpMetadataProvider.setParserPool(parserPool());
-    	ExtendedMetadataDelegate extendedMetadataDelegate = new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
-    	return extendedMetadataDelegate;
-    }
- 
-    // IDP Metadata configuration - paths to metadata of IDPs in circle of trust
-    // is here
-    // Do no forget to call iniitalize method on providers
-    @Bean
-    @Qualifier("metadata")
-    public CachingMetadataManager metadata() throws MetadataProviderException {
-        List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
-        providers.add(ssoCircleExtendedMetadataProvider());
-        return new CachingMetadataManager(providers);
-    }
      
     // Initialization of the velocity engine
     @Bean
@@ -215,7 +199,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     // Central storage of cryptographic keys
     @Bean
-    public JKSKeyManager keyManager() {
+    public KeyManager keyManager() {
         DefaultResourceLoader loader = new DefaultResourceLoader();
         Resource storeFile = loader
                 .getResource("classpath:/saml/samlKeystore.jks");
@@ -226,6 +210,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JKSKeyManager(storeFile, storePass, passwords, defaultKey);
     }
  
+    // Setup TLS Socket Factory
+    @Bean
+    public TLSProtocolConfigurer tlsProtocolConfigurer() {
+    	return new TLSProtocolConfigurer();
+    }
+    
+    @Bean
+    public ProtocolSocketFactory socketFactory() {
+        return new TLSProtocolSocketFactory(keyManager(), null, "default");
+    }
+
+    @Bean
+    public Protocol socketFactoryProtocol() {
+        return new Protocol("https", socketFactory(), 443);
+    }
+
+    @Bean
+    public MethodInvokingFactoryBean socketFactoryInitialization() {
+        MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
+        methodInvokingFactoryBean.setTargetClass(Protocol.class);
+        methodInvokingFactoryBean.setTargetMethod("registerProtocol");
+        Object[] args = {"https", socketFactoryProtocol()};
+        methodInvokingFactoryBean.setArguments(args);
+        return methodInvokingFactoryBean;
+    }
+    
     @Bean
     public WebSSOProfileOptions defaultWebSSOProfileOptions() {
         WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
@@ -241,7 +251,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         samlEntryPoint.setDefaultProfileOptions(defaultWebSSOProfileOptions());
         return samlEntryPoint;
     }
- 
+    
+    // Setup advanced info about metadata
+    @Bean
+    public ExtendedMetadata extendedMetadata() {
+    	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
+    	extendedMetadata.setIdpDiscoveryEnabled(true);
+    	return extendedMetadata;
+    }
+    
     // IDP Discovery Service
     @Bean
     public SAMLDiscovery samlIDPDiscovery() {
@@ -250,12 +268,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return idpDiscovery;
     }
     
-    // Setup advanced info about metadata
     @Bean
-    public ExtendedMetadata extendedMetadata() {
-    	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
-    	extendedMetadata.setIdpDiscoveryEnabled(true);
-    	return extendedMetadata;
+    @Qualifier("idp-ssocircle")
+    public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() 
+    		throws MetadataProviderException {	
+    	@SuppressWarnings({ "deprecation"})
+    	HTTPMetadataProvider httpMetadataProvider 
+    		= new HTTPMetadataProvider("https://idp.ssocircle.com/idp-meta.xml", 5000);
+    	httpMetadataProvider.setParserPool(parserPool());
+    	ExtendedMetadataDelegate extendedMetadataDelegate =
+    			new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
+    	return extendedMetadataDelegate;
+    }
+ 
+    // IDP Metadata configuration - paths to metadata of IDPs in circle of trust
+    // is here
+    // Do no forget to call iniitalize method on providers
+    @Bean
+    @Qualifier("metadata")
+    public CachingMetadataManager metadata() throws MetadataProviderException {
+        List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
+        providers.add(ssoCircleExtendedMetadataProvider());
+        return new CachingMetadataManager(providers);
     }
  
     // Filter automatically generates default SP metadata
@@ -265,6 +299,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
         metadataGenerator.setExtendedMetadata(extendedMetadata());
         metadataGenerator.setIncludeDiscoveryExtension(false);
+        metadataGenerator.setKeyManager(keyManager()); 
         return metadataGenerator;
     }
  
@@ -287,7 +322,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// Handler deciding where to redirect user after failed login
     @Bean
     public SimpleUrlAuthenticationFailureHandler authenticationFailureHandler() {
-    	SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+    	SimpleUrlAuthenticationFailureHandler failureHandler =
+    			new SimpleUrlAuthenticationFailureHandler();
     	failureHandler.setUseForward(true);
     	failureHandler.setDefaultFailureUrl("/error");
     	return failureHandler;
@@ -328,7 +364,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Logout handler terminating local session
     @Bean
     public SecurityContextLogoutHandler logoutHandler() {
-        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        SecurityContextLogoutHandler logoutHandler = 
+        		new SecurityContextLogoutHandler();
         logoutHandler.setInvalidateHttpSession(true);
         logoutHandler.setClearAuthentication(true);
         return logoutHandler;
@@ -351,14 +388,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 new LogoutHandler[] { logoutHandler() },
                 new LogoutHandler[] { logoutHandler() });
     }
-    
-    @Bean
-    public HTTPSOAP11Binding soapBinding() {
-        return new HTTPSOAP11Binding(parserPool());
-    }
 	
+    // Bindings
     private ArtifactResolutionProfile artifactResolutionProfile() {
-        final ArtifactResolutionProfileImpl artifactResolutionProfile = new ArtifactResolutionProfileImpl(httpClient());
+        final ArtifactResolutionProfileImpl artifactResolutionProfile = 
+        		new ArtifactResolutionProfileImpl(httpClient());
         artifactResolutionProfile.setProcessor(new SAMLProcessorImpl(soapBinding()));
         return artifactResolutionProfile;
     }
@@ -368,6 +402,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new HTTPArtifactBinding(parserPool, velocityEngine, artifactResolutionProfile());
     }
  
+    @Bean
+    public HTTPSOAP11Binding soapBinding() {
+        return new HTTPSOAP11Binding(parserPool());
+    }
+    
     @Bean
     public HTTPPostBinding httpPostBinding() {
     	return new HTTPPostBinding(parserPool(), velocityEngine());
@@ -388,6 +427,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	return new HTTPPAOS11Binding(parserPool());
     }
     
+    // Processor
 	@Bean
 	public SAMLProcessorImpl processor() {
 		Collection<SAMLBinding> bindings = new ArrayList<SAMLBinding>();
@@ -398,7 +438,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		bindings.add(httpPAOS11Binding());
 		return new SAMLProcessorImpl(bindings);
 	}
-     
+    
+	/**
+	 * Define the security filter chain in order to support SSO Auth by using SAML 2.0
+	 * 
+	 * @return Filter chain proxy
+	 * @throws Exception
+	 */
     @Bean
     public FilterChainProxy samlFilter() throws Exception {
         List<SecurityFilterChain> chains = new ArrayList<SecurityFilterChain>();
