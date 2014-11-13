@@ -10,7 +10,13 @@
 
 	<!-- Project description -->
 	<name>Spring Boot and Spring Security SAML integration sample</name>
-	<description>Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.1.6) and Spring Security SAML Extention (1.0.0.RELEASE), by defining an annotation-based configuration (Java Configuration). Thymeleaf (2.1.1) is also used as template engine.</description>
+	<description>
+		Currently Spring Security SAML module doesn't provide a starter for Spring Boot. 
+		Moreover, its configuration is XML-based as of this writing. The aim of this project 
+		is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.1.6) 
+		and Spring Security SAML Extention (1.0.0.RELEASE), by defining an annotation-based 
+		configuration (Java Configuration). Thymeleaf (2.1.1) is also used as template engine.
+	</description>
 	<url>https://github.com/vdenotaris/spring-boot-security-saml-sample</url>
 	
 	<licenses>
@@ -119,10 +125,10 @@
 				<version>2.5</version>
 			</plugin>
 			<plugin>
-    			<artifactId>maven-war-plugin</artifactId>
-    			<configuration>
-        			<failOnMissingWebXml>false</failOnMissingWebXml>
-    			</configuration>
+    				<artifactId>maven-war-plugin</artifactId>
+    				<configuration>
+        				<failOnMissingWebXml>false</failOnMissingWebXml>
+    				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
