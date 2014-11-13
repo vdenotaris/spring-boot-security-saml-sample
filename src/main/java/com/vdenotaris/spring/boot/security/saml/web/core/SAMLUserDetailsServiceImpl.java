@@ -52,10 +52,7 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 		// In a real scenario, this implementation have to locate user in a arbitrary
 		// dataStore based on information present in the SAMLCredential and
 		// return such a date in a form of application specific UserDetails object.
-		User userDetails = new User(userID, "<abc123>", true, true, true,
-				true, authorities);
-		
-		return userDetails;
+		return new User(userID, "<abc123>", true, true, true, true, authorities);
 	}
 	
 }

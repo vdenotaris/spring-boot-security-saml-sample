@@ -27,6 +27,8 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 @EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer {
+	
+    private static Class<Application> applicationClass = Application.class;
 
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
@@ -37,5 +39,4 @@ public class Application extends SpringBootServletInitializer {
         return application.sources(applicationClass);
     }
 
-    private static Class<Application> applicationClass = Application.class;
 }

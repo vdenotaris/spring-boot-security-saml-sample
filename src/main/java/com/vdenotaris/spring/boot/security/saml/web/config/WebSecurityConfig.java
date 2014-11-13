@@ -141,6 +141,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public SAMLAuthenticationProvider samlAuthenticationProvider() {
         SAMLAuthenticationProvider samlAuthenticationProvider = new SAMLAuthenticationProvider();
         samlAuthenticationProvider.setUserDetails(samlUserDetailsServiceImpl);
+        samlAuthenticationProvider.setForcePrincipalAsString(false);
         return samlAuthenticationProvider;
     }
  
@@ -257,6 +258,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public ExtendedMetadata extendedMetadata() {
     	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
     	extendedMetadata.setIdpDiscoveryEnabled(true);
+    	extendedMetadata.setSignMetadata(true);
     	return extendedMetadata;
     }
     
@@ -278,6 +280,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	httpMetadataProvider.setParserPool(parserPool());
     	ExtendedMetadataDelegate extendedMetadataDelegate =
     			new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
+    	extendedMetadataDelegate.setMetadataTrustCheck(false);
+    	extendedMetadataDelegate.setMetadataRequireSignature(false);
     	return extendedMetadataDelegate;
     }
  
@@ -489,6 +493,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .httpBasic()
                 .authenticationEntryPoint(samlEntryPoint());
+        http
+        	.csrf()
+        		.disable();
         http
             .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
             .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class);
