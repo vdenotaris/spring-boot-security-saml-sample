@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample)
+
 Spring Boot-based sample Service Provider by using Spring Security SAML extension
 ====================
 
