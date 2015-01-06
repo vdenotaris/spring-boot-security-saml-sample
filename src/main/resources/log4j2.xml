@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%p [%t] %c{1}.%M(%L) | %m%n"/>
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="com.vdenotaris.spring.boot" level="debug"/>
+		<Logger name="org.springframework.security.saml" level="info"/>
+		<Logger name="org.opensaml" level="info"/>
+		<Logger name="PROTOCOL_MESSAGE" level="debug"/>
+
+		<Root level="warn">
+			<AppenderRef ref="Console"/>
+		</Root>
+	</Loggers>
+</Configuration>
