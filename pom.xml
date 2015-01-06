@@ -13,7 +13,7 @@
 	<description>
 		Currently Spring Security SAML module doesn't provide a starter for Spring Boot. 
 		Moreover, its configuration is XML-based as of this writing. The aim of this project 
-		is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.1.6) 
+		is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.2.0)
 		and Spring Security SAML Extention (1.0.0.RELEASE), by defining an annotation-based 
 		configuration (Java Configuration). Thymeleaf (2.1.1) is also used as template engine.
 	</description>
@@ -42,29 +42,20 @@
 		</contributor>
 	</contributors>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.2.0.RELEASE</version>
+	</parent>
+	
 	<!-- Project properties -->
 	<properties>
 		<start-class>com.vdenotaris.spring.boot.security.saml.web.Application</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring.platform.version>1.0.2.RELEASE</spring.platform.version>
 		<spring.saml.version>1.0.0.RELEASE</spring.saml.version>
 	</properties>
-
-
-	<dependencyManagement>
-		<dependencies>
-			<!-- Spring Platform Dependency Manager -->
-			<dependency>
-				<groupId>io.spring.platform</groupId>
-				<artifactId>platform-bom</artifactId>
-				<version>${spring.platform.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -79,7 +70,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j</artifactId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -125,10 +116,10 @@
 				<version>2.5</version>
 			</plugin>
 			<plugin>
-    				<artifactId>maven-war-plugin</artifactId>
-    				<configuration>
-        				<failOnMissingWebXml>false</failOnMissingWebXml>
-    				</configuration>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
