@@ -49,9 +49,9 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 		GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 		authorities.add(authority);
 
-		// In a real scenario, this implementation have to locate user in a arbitrary
+		// In a real scenario, this implementation has to locate user in a arbitrary
 		// dataStore based on information present in the SAMLCredential and
-		// return such a date in a form of application specific UserDetails object.
+		// returns such a date in a form of application specific UserDetails object.
 		return new User(userID, "<abc123>", true, true, true, true, authorities);
 	}
 	
