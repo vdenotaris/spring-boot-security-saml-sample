@@ -83,6 +83,7 @@ import org.springframework.security.saml.websso.WebSSOProfileConsumer;
 import org.springframework.security.saml.websso.WebSSOProfileConsumerHoKImpl;
 import org.springframework.security.saml.websso.WebSSOProfileConsumerImpl;
 import org.springframework.security.saml.websso.WebSSOProfileECPImpl;
+import org.springframework.security.saml.websso.WebSSOProfileHoKImpl;
 import org.springframework.security.saml.websso.WebSSOProfileImpl;
 import org.springframework.security.saml.websso.WebSSOProfileOptions;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -183,8 +184,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     // SAML 2.0 Holder-of-Key Web SSO profile
     @Bean
-    public WebSSOProfileConsumerHoKImpl hokWebSSOProfile() {
-        return new WebSSOProfileConsumerHoKImpl();
+    public WebSSOProfile hokWebSSOProfile() {
+        return new WebSSOProfileHoKImpl();
     }
  
     // SAML 2.0 ECP profile
