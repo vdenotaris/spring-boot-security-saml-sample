@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -43,8 +44,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.saml.SAMLAuthenticationProvider;
 import org.springframework.security.saml.SAMLBootstrap;
 import org.springframework.security.saml.SAMLDiscovery;
@@ -100,7 +101,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.vdenotaris.spring.boot.security.saml.web.core.SAMLUserDetailsServiceImpl;
  
 @Configuration
-@EnableWebMvcSecurity
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
@@ -257,8 +258,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ExtendedMetadata extendedMetadata() {
     	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
-    	extendedMetadata.setIdpDiscoveryEnabled(true);
-    	extendedMetadata.setSignMetadata(true);
+    	extendedMetadata.setIdpDiscoveryEnabled(true); 
+    	extendedMetadata.setSignMetadata(false);
     	return extendedMetadata;
     }
     
@@ -270,20 +271,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return idpDiscovery;
     }
     
-    @Bean
-    @Qualifier("idp-ssocircle")
-    public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() 
-    		throws MetadataProviderException {	
-    	@SuppressWarnings({ "deprecation"})
-    	HTTPMetadataProvider httpMetadataProvider 
-    		= new HTTPMetadataProvider("https://idp.ssocircle.com/idp-meta.xml", 5000);
-    	httpMetadataProvider.setParserPool(parserPool());
-    	ExtendedMetadataDelegate extendedMetadataDelegate =
-    			new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
-    	extendedMetadataDelegate.setMetadataTrustCheck(false);
-    	extendedMetadataDelegate.setMetadataRequireSignature(false);
-    	return extendedMetadataDelegate;
-    }
+	@Bean
+	@Qualifier("idp-ssocircle")
+	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider()
+			throws MetadataProviderException {
+		String idpSSOCircleMetadataURL = "https://idp.ssocircle.com/idp-meta.xml";
+		Timer backgroundTaskTimer = new Timer(true);
+		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(
+				backgroundTaskTimer, httpClient(), idpSSOCircleMetadataURL);
+		httpMetadataProvider.setParserPool(parserPool());
+		ExtendedMetadataDelegate extendedMetadataDelegate = 
+				new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
+		extendedMetadataDelegate.setMetadataTrustCheck(true);
+		extendedMetadataDelegate.setMetadataRequireSignature(false);
+		return extendedMetadataDelegate;
+	}
  
     // IDP Metadata configuration - paths to metadata of IDPs in circle of trust
     // is here

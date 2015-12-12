@@ -5,18 +5,12 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>1.1.0.RELEASE</version>
+	<version>1.2.0.RELEASE</version>
 	<packaging>war</packaging>
 
 	<!-- Project description -->
 	<name>Spring Boot and Spring Security SAML integration sample</name>
-	<description>
-		Currently Spring Security SAML module doesn't provide a starter for Spring Boot. 
-		Moreover, its configuration is XML-based as of this writing. The aim of this project 
-		is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.2.6.RELEASE) 
-		and Spring Security SAML Extension (1.0.1.RELEASE), by defining an annotation-based 
-		configuration (Java Configuration). Thymeleaf is also used as template engine.
-	</description>
+	<description>Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a Service Provider (SP) which uses Spring Boot (1.3.0.RELEASE) and Spring Security SAML Extension (1.0.1.RELEASE), by defining an annotation-based configuration (Java Configuration). Thymeleaf is also used as template engine.</description>
 	<url>https://github.com/vdenotaris/spring-boot-security-saml-sample</url>
 	
 	<developers>
@@ -52,7 +46,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.6.RELEASE</version>
+		<version>1.3.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
