@@ -25,7 +25,7 @@ Currently Spring Security SAML module doesn't provide a starter for Spring Boot.
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto://dev@vdenotaris.com))
 - **Website:** [vdenotaris.com](http://vdenotaris.com)
-- **Version:**  ` 1.2.0-RELEASE `
+- **Version:**  ` 1.2.0.SNAPSHOT `
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
