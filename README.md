@@ -24,7 +24,7 @@ Currently Spring Security SAML module doesn't provide a starter for Spring Boot.
 **SSOCircle** ([ssocircle.com](http://www.ssocircle.com/en/portfolio/publicidp/)) is used as public Identity Provider for test purpose.
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto://dev@vdenotaris.com))
-- **Website:** [vdenotaris.com](http://vdenotaris.com)
+- **Website:** [vdenotaris.com](http://www.vdenotaris.com)
 - **Version:**  ` 1.2.0.SNAPSHOT `
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
