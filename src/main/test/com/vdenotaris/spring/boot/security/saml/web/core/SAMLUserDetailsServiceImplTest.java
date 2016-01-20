@@ -16,7 +16,7 @@
 
 package com.vdenotaris.spring.boot.security.saml.web.core;
 
-import com.vdenotaris.spring.boot.security.saml.web.Application;
+import com.vdenotaris.spring.boot.security.saml.web.TestConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opensaml.saml2.core.NameID;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=Application.class)
+@ContextConfiguration(classes=TestConfiguration.class)
 public class SAMLUserDetailsServiceImplTest {
 
     private static final String USER_ID = "UserId";
