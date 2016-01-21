@@ -107,6 +107,31 @@
         				<failOnMissingWebXml>false</failOnMissingWebXml>
     				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<check>
+						true
+					</check>
+					<formats>
+						<format>html</format>
+					</formats>
+					<outputDirectory>${project.build.directory}/site/cobertura</outputDirectory>
+					<instrumentation>
+						<ignoreTrivial>true</ignoreTrivial>
+					</instrumentation>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
