@@ -121,6 +121,9 @@
 					<outputDirectory>${project.build.directory}/site/cobertura</outputDirectory>
 					<instrumentation>
 						<ignoreTrivial>true</ignoreTrivial>
+						<excludes>
+							<exclude>com/**/*Config.class</exclude>
+						</excludes>
 					</instrumentation>
 				</configuration>
 				<executions>

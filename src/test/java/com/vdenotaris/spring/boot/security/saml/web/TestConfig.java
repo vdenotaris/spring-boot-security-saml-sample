@@ -20,5 +20,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class TestConfiguration extends WebMvcConfigurerAdapter {
+public class TestConfig extends WebMvcConfigurerAdapter {
 }
