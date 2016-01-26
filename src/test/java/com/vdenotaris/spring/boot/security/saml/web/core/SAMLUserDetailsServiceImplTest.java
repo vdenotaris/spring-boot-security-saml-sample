@@ -16,7 +16,8 @@
 
 package com.vdenotaris.spring.boot.security.saml.web.core;
 
-import com.vdenotaris.spring.boot.security.saml.web.TestConfiguration;
+import com.vdenotaris.spring.boot.security.saml.web.CommonTestSupport;
+import com.vdenotaris.spring.boot.security.saml.web.TestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opensaml.saml2.core.NameID;
@@ -38,10 +39,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=TestConfiguration.class)
-public class SAMLUserDetailsServiceImplTest {
-
-    private static final String USER_ID = "UserId";
+@ContextConfiguration(classes= TestConfig.class)
+public class SAMLUserDetailsServiceImplTest extends CommonTestSupport {
 
     @Autowired
     private SAMLUserDetailsServiceImpl userDetailsService;
@@ -49,11 +48,11 @@ public class SAMLUserDetailsServiceImplTest {
     @Test
     public void testLoadUserBySAML() {
         // given
-        NameID nameIDmock = mock(NameID.class);
-        when(nameIDmock.getValue()).thenReturn(USER_ID);
+        NameID mockNameID = mock(NameID.class);
+        when(mockNameID.getValue()).thenReturn(USER_NAME);
 
         SAMLCredential credentialsMock = mock(SAMLCredential.class);
-        when(credentialsMock.getNameID()).thenReturn(nameIDmock);
+        when(credentialsMock.getNameID()).thenReturn(mockNameID);
 
         // when
         Object actual = userDetailsService.loadUserBySAML(credentialsMock);
@@ -63,8 +62,8 @@ public class SAMLUserDetailsServiceImplTest {
         assertTrue(actual instanceof User);
 
         User user = (User)actual;
-        assertEquals(USER_ID, user.getUsername());
-        assertEquals("<abc123>", user.getPassword());
+        assertEquals(USER_NAME, user.getUsername());
+        assertEquals(USER_PASSWORD, user.getPassword());
         assertTrue(user.isEnabled());
         assertTrue(user.isAccountNonExpired());
         assertTrue(user.isCredentialsNonExpired());
@@ -75,6 +74,6 @@ public class SAMLUserDetailsServiceImplTest {
         Object authority = authorities.get(0);
 
         assertTrue(authority instanceof SimpleGrantedAuthority);
-        assertEquals("ROLE_USER", ((SimpleGrantedAuthority)authority).getAuthority());
+        assertEquals(USER_ROLE, ((SimpleGrantedAuthority)authority).getAuthority());
     }
 }

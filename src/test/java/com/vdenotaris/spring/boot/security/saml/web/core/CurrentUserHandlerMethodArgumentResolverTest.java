@@ -16,7 +16,8 @@
 
 package com.vdenotaris.spring.boot.security.saml.web.core;
 
-import com.vdenotaris.spring.boot.security.saml.web.TestConfiguration;
+import com.vdenotaris.spring.boot.security.saml.web.CommonTestSupport;
+import com.vdenotaris.spring.boot.security.saml.web.TestConfig;
 import com.vdenotaris.spring.boot.security.saml.web.stereotypes.CurrentUser;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,10 +43,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=TestConfiguration.class)
-public class CurrentUserHandlerMethodArgumentResolverTest {
-
-    private static final String USER_NAME = "userName";
+@ContextConfiguration(classes= TestConfig.class)
+public class CurrentUserHandlerMethodArgumentResolverTest extends CommonTestSupport {
 
     @Autowired
     private CurrentUserHandlerMethodArgumentResolver resolver;
@@ -78,12 +77,12 @@ public class CurrentUserHandlerMethodArgumentResolverTest {
         ModelAndViewContainer mavContainer = mock(ModelAndViewContainer.class);
         WebDataBinderFactory binderFactory = mock(WebDataBinderFactory.class);
         NativeWebRequest webRequest = mock(NativeWebRequest.class);
-        User userStub = new User(USER_NAME, "", Collections.emptyList());
-        Principal principalStub = new UsernamePasswordAuthenticationToken(userStub, null);
-        when(webRequest.getUserPrincipal()).thenReturn(principalStub);
+        User stubUser = new User(USER_NAME, "", Collections.emptyList());
+        Principal stubPrincipal = new UsernamePasswordAuthenticationToken(stubUser, null);
+        when(webRequest.getUserPrincipal()).thenReturn(stubPrincipal);
 
         // when/then
-        assertEquals(userStub,
+        assertEquals(stubUser,
                 resolver.resolveArgument(validParam, mavContainer, webRequest,binderFactory));
         assertEquals(WebArgumentResolver.UNRESOLVED,
                 resolver.resolveArgument(notAnnotatedParam, mavContainer, webRequest,binderFactory));
