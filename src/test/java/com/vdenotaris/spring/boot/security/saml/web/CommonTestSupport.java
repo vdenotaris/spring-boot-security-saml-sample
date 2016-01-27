@@ -55,11 +55,9 @@ public class CommonTestSupport {
         SecurityContext mockSecurityContext = mock(SecurityContext.class);
 
         if (secured) {
-
             ExpiringUsernameAuthenticationToken principal =
                     new ExpiringUsernameAuthenticationToken(null, USER_DETAILS, USER_NAME, AUTHORITIES);
             principal.setDetails(USER_DETAILS);
-
             when(mockSecurityContext.getAuthentication()).thenReturn(principal);
         }
 
@@ -83,7 +81,7 @@ public class CommonTestSupport {
                         AUTHORITIES);
 
         when(mockSecurityContext.getAuthentication()).thenReturn(principal);
-
+        
         SecurityContextHolder.setContext(mockSecurityContext);
         mockSession.setAttribute(
                 HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,

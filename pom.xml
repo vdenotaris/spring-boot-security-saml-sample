@@ -5,7 +5,7 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>1.2.0.SNAPSHOT</version>
+	<version>1.2.0.RELEASE</version>
 	<packaging>war</packaging>
 
 	<!-- Project description -->
@@ -25,6 +25,9 @@
 		<contributor>
 			<name>Vladimír Schäfer</name>
 		</contributor>
+		<contributor>
+			<name>Alexey Syrtsev</name>
+		</contributor>		
 	</contributors>	
 	
 	<licenses>

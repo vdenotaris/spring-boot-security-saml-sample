@@ -29,6 +29,16 @@ Currently Spring Security SAML module doesn't provide a starter for Spring Boot.
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
+####Unit tests
+
+I would like to say thank you to *Alexey Syrtsev* ([github.com/airleks](https://github.com/airleks)) for his contribution on unit tests.
+
+| Metric | Result |
+| ------------- | -----:|
+| Coverage % | 99% |
+| Lines Covered | 196 |
+| Total Lines | 199 |
+
 ###License
 
     Copyright 2016 Vincenzo De Notaris

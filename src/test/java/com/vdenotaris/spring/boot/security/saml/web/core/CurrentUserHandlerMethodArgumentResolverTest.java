@@ -55,12 +55,14 @@ public class CurrentUserHandlerMethodArgumentResolverTest extends CommonTestSupp
 
     private MethodParameter wrongTypeParam;
 
-
     @Before
     public void init() throws NoSuchMethodException {
-        validParam = new MethodParameter(MethodSamples.class.getMethod("validUser", User.class), 0);
-        notAnnotatedParam = new MethodParameter(MethodSamples.class.getMethod("notAnnotatedUser", User.class), 0);
-        wrongTypeParam = new MethodParameter(MethodSamples.class.getMethod("wrongTypeUser", Object.class), 0);
+        validParam = new MethodParameter(
+        		MethodSamples.class.getMethod("validUser", User.class), 0);
+        notAnnotatedParam = new MethodParameter(
+        		MethodSamples.class.getMethod("notAnnotatedUser", User.class), 0);
+        wrongTypeParam = new MethodParameter(
+        		MethodSamples.class.getMethod("wrongTypeUser", Object.class), 0);
     }
 
     @Test
@@ -69,7 +71,6 @@ public class CurrentUserHandlerMethodArgumentResolverTest extends CommonTestSupp
         assertFalse(resolver.supportsParameter(notAnnotatedParam));
         assertFalse(resolver.supportsParameter(wrongTypeParam));
     }
-
 
     @Test
     public void testResolveArgument() throws Exception {

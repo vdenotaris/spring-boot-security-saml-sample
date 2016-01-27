@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.vdenotaris.spring.boot.security.saml.web.controllers;
 
 import com.vdenotaris.spring.boot.security.saml.web.CommonTestSupport;
@@ -56,7 +57,6 @@ public class LandingControllerTest extends CommonTestSupport {
 
     private MockMvc mockMvc;
 
-
     @Before
     public void setUp()
     {
@@ -85,7 +85,8 @@ public class LandingControllerTest extends CommonTestSupport {
         public Object resolveArgument(MethodParameter methodParameter,
                                       ModelAndViewContainer modelAndViewContainer,
                                       NativeWebRequest nativeWebRequest,
-                                      WebDataBinderFactory webDataBinderFactory) throws Exception {
+                                      WebDataBinderFactory webDataBinderFactory)
+                                    		  throws Exception {
             return CommonTestSupport.USER_DETAILS;
         }
     }

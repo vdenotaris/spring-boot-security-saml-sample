@@ -16,7 +16,6 @@
 
 package com.vdenotaris.spring.boot.security.saml.web.controllers;
 
-
 import com.vdenotaris.spring.boot.security.saml.web.CommonTestSupport;
 import com.vdenotaris.spring.boot.security.saml.web.TestConfig;
 import org.junit.Before;
@@ -52,7 +51,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 public class SSOControllerTest extends CommonTestSupport {
 
     private static final Set<String> IDPS =
-            Collections.unmodifiableSet(new HashSet<>(Arrays.asList("idp1", "idp2", "idp3")));
+            Collections.unmodifiableSet(
+            		new HashSet<>(Arrays.asList("idp1", "idp2", "idp3")));
 
     @InjectMocks
     SSOController ssoController;
@@ -64,7 +64,6 @@ public class SSOControllerTest extends CommonTestSupport {
     private View mockView;
 
     private MockMvc mockMvc;
-
 
     @Before
     public void setUp()
