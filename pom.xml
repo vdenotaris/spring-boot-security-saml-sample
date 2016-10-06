@@ -5,7 +5,7 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>1.4.0.RELEASE</version>
+	<version>1.4.1.RELEASE</version>
 	<packaging>war</packaging>
 
 	<!-- Project description -->
