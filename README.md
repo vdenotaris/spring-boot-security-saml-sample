@@ -44,7 +44,7 @@ I would like to say thank you to *Alexey Syrtsev* ([github.com/airleks](https://
 
 1. The certificate on [https://idp.ssocircle.com/](https://idp.ssocircle.com/) seems to change on a fairly regular basis. This results in the following exception. 
 
-	    Caused by: javax.net.ssl.SSLPeerUnverifiedException: SSL peer failed hostname validation for name: null
+	    javax.net.ssl.SSLPeerUnverifiedException: SSL peer failed hostname validation for name: null
 
     To update the certificates in the keystore run the following commands: 
 
