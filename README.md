@@ -1,4 +1,5 @@
-
+Spring Boot-based sample Service Provider by using Spring Security SAML extension [![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample) [![DOI](https://zenodo.org/badge/22013861.svg)](https://zenodo.org/badge/latestdoi/22013861)
+====================
 
 ## References
 
