@@ -44,20 +44,7 @@ I would like to say thank you to *Alexey Syrtsev* ([github.com/airleks](https://
 
 1. The certificate on [https://idp.ssocircle.com/](https://idp.ssocircle.com/) seems to change on a fairly regular basis. This results in the following exception. 
 
-	
 	    Caused by: javax.net.ssl.SSLPeerUnverifiedException: SSL peer failed hostname validation for name: null
-	        at org.opensaml.ws.soap.client.http.TLSProtocolSocketFactory.verifyHostname(TLSProtocolSocketFactory.java:233) ~[openws-1.5.1.jar:?]
-	        at org.opensaml.ws.soap.client.http.TLSProtocolSocketFactory.createSocket(TLSProtocolSocketFactory.java:186) ~[openws-1.5.1.jar:?]
-	        at org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory.createSocket(TLSProtocolSocketFactory.java:97) ~[spring-security-saml2-core-1.0.2.RELEASE.jar:1.0.2.RELEASE]
-	        at org.apache.commons.httpclient.HttpConnection.open(HttpConnection.java:707) ~[commons-httpclient-3.1.jar:?]
-	        at org.apache.commons.httpclient.MultiThreadedHttpConnectionManager$HttpConnectionAdapter.open(MultiThreadedHttpConnectionManager.java:1361) ~[commons-httpclient-3.1.jar:?]
-	        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:387) ~[commons-httpclient-3.1.jar:?]
-	        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171) ~[commons-httpclient-3.1.jar:?]
-	        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397) ~[commons-httpclient-3.1.jar:?]
-	        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323) ~[commons-httpclient-3.1.jar:?]
-	        at org.opensaml.saml2.metadata.provider.HTTPMetadataProvider.fetchMetadata(HTTPMetadataProvider.java:250) ~[opensaml-2.6.1.jar:?]
-	        at org.opensaml.saml2.metadata.provider.AbstractReloadingMetadataProvider.refresh(AbstractReloadingMetadataProvider.java:255) ~[opensaml-2.6.1.jar:?]
-	        ... 47 more
 
     To update the certificates in the keystore run the following commands: 
 
