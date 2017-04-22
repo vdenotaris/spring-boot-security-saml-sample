@@ -1,5 +1,4 @@
-Spring Boot-based sample Service Provider by using Spring Security SAML extension [![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample) [![DOI](https://zenodo.org/badge/22013861.svg)](https://zenodo.org/badge/latestdoi/22013861)
-====================
+
 
 ## References
 
@@ -42,46 +41,43 @@ I would like to say thank you to *Alexey Syrtsev* ([github.com/airleks](https://
 
 #### Useful notes
 
-0. The certificate on [https://idp.ssocircle.com/](https://idp.ssocircle.com/) seems to change on a fairly regular basis. This results in the following exception. 
+1. The certificate on [https://idp.ssocircle.com/](https://idp.ssocircle.com/) seems to change on a fairly regular basis. This results in the following exception. 
 
-```
-    Caused by: javax.net.ssl.SSLPeerUnverifiedException: SSL peer failed hostname validation for name: null
-        at org.opensaml.ws.soap.client.http.TLSProtocolSocketFactory.verifyHostname(TLSProtocolSocketFactory.java:233) ~[openws-1.5.1.jar:?]
-        at org.opensaml.ws.soap.client.http.TLSProtocolSocketFactory.createSocket(TLSProtocolSocketFactory.java:186) ~[openws-1.5.1.jar:?]
-        at org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory.createSocket(TLSProtocolSocketFactory.java:97) ~[spring-security-saml2-core-1.0.2.RELEASE.jar:1.0.2.RELEASE]
-        at org.apache.commons.httpclient.HttpConnection.open(HttpConnection.java:707) ~[commons-httpclient-3.1.jar:?]
-        at org.apache.commons.httpclient.MultiThreadedHttpConnectionManager$HttpConnectionAdapter.open(MultiThreadedHttpConnectionManager.java:1361) ~[commons-httpclient-3.1.jar:?]
-        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:387) ~[commons-httpclient-3.1.jar:?]
-        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171) ~[commons-httpclient-3.1.jar:?]
-        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397) ~[commons-httpclient-3.1.jar:?]
-        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323) ~[commons-httpclient-3.1.jar:?]
-        at org.opensaml.saml2.metadata.provider.HTTPMetadataProvider.fetchMetadata(HTTPMetadataProvider.java:250) ~[opensaml-2.6.1.jar:?]
-        at org.opensaml.saml2.metadata.provider.AbstractReloadingMetadataProvider.refresh(AbstractReloadingMetadataProvider.java:255) ~[opensaml-2.6.1.jar:?]
-        ... 47 more
-```
+	
+	    Caused by: javax.net.ssl.SSLPeerUnverifiedException: SSL peer failed hostname validation for name: null
+	        at org.opensaml.ws.soap.client.http.TLSProtocolSocketFactory.verifyHostname(TLSProtocolSocketFactory.java:233) ~[openws-1.5.1.jar:?]
+	        at org.opensaml.ws.soap.client.http.TLSProtocolSocketFactory.createSocket(TLSProtocolSocketFactory.java:186) ~[openws-1.5.1.jar:?]
+	        at org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory.createSocket(TLSProtocolSocketFactory.java:97) ~[spring-security-saml2-core-1.0.2.RELEASE.jar:1.0.2.RELEASE]
+	        at org.apache.commons.httpclient.HttpConnection.open(HttpConnection.java:707) ~[commons-httpclient-3.1.jar:?]
+	        at org.apache.commons.httpclient.MultiThreadedHttpConnectionManager$HttpConnectionAdapter.open(MultiThreadedHttpConnectionManager.java:1361) ~[commons-httpclient-3.1.jar:?]
+	        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:387) ~[commons-httpclient-3.1.jar:?]
+	        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171) ~[commons-httpclient-3.1.jar:?]
+	        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397) ~[commons-httpclient-3.1.jar:?]
+	        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323) ~[commons-httpclient-3.1.jar:?]
+	        at org.opensaml.saml2.metadata.provider.HTTPMetadataProvider.fetchMetadata(HTTPMetadataProvider.java:250) ~[opensaml-2.6.1.jar:?]
+	        at org.opensaml.saml2.metadata.provider.AbstractReloadingMetadataProvider.refresh(AbstractReloadingMetadataProvider.java:255) ~[opensaml-2.6.1.jar:?]
+	        ... 47 more
 
-to update the certificates in the keystore run the following commands: 
+    To update the certificates in the keystore run the following commands: 
 
-```
-  cd src/main/resources/saml/  
-  ./update-certifcate.sh 
-```
+		cd src/main/resources/saml/  
+		./update-certifcate.sh 
 
-1. Sometimes SSO Circle could display you an error during the authenticaton process. In this case, please update your federation metadata directly on [https://idp.ssocircle.com](https://idp.ssocircle.com):
+2. Sometimes SSO Circle could display you an error during the authenticaton process. In this case, please update your federation metadata directly on [https://idp.ssocircle.com](https://idp.ssocircle.com):
 
 	> Manage Metadata > Service Provider Metadata
 	
 	Remove the current record and add a new one, using your FQDN and providing a new copy of your metadata: your can retrieve them at [http://localhost:8080/saml/metadata](http://localhost:8080/saml/metadata).
 
-2. When the project version corresponds with the Spring Boot parent version, Maven may give you a warning as follows:
+3. When the project version corresponds with the Spring Boot parent version, Maven may give you a warning as follows:
 
 	> Version is duplicate of parent version.
 
 	Actually there is nothing wrong with the used configuration, thus you can just ignore that message.
 
-###License
+### License
 
-    Copyright 2016 Vincenzo De Notaris
+    Copyright 2017 Vincenzo De Notaris
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -94,6 +90,3 @@ to update the certificates in the keystore run the following commands:
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-
-
-
