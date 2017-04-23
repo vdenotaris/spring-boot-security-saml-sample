@@ -19,14 +19,14 @@ Spring SAML Extension allows seamless inclusion of SAML 2.0 Service Provider cap
 
 ## Project description
 
-Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a **Service Provider (SP)** which uses **Spring Boot** (`1.4.0.RELEASE`) and **Spring Security SAML Extension** (`1.0.2.RELEASE`), by defining an annotation-based configuration (**Java Configuration**). **Thymeleaf** is also used as template engine.
+Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a **Service Provider (SP)** which uses **Spring Boot** (`1.5.3.RELEASE`) and **Spring Security SAML Extension** (`1.0.2.RELEASE`), by defining an annotation-based configuration (**Java Configuration**). **Thymeleaf** is also used as template engine.
 
 **SSOCircle** ([ssocircle.com](http://www.ssocircle.com/en/portfolio/publicidp/)) is used as public Identity Provider for test purpose.
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 1.4.0.RELEASE `
-- **Date**: 2016-09-09
+- **Version:**  ` 1.5.0.RELEASE `
+- **Date**: 2017-04-23
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
