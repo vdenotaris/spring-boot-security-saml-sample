@@ -24,7 +24,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ContextConfiguration;
@@ -44,8 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = SpringApplicationContextLoader.class,
-        classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @WebAppConfiguration
 public class LandingControllerTest extends CommonTestSupport {
 
