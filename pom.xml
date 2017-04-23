@@ -5,7 +5,7 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>1.4.0.RELEASE</version>
+	<version>1.5.0.RELEASE</version>
 	<packaging>war</packaging>
 
 	<!-- Project description -->
@@ -27,7 +27,7 @@
 		</contributor>
 		<contributor>
 			<name>Alexey Syrtsev</name>
-		</contributor>		
+		</contributor>	
 	</contributors>	
 	
 	<licenses>
@@ -37,7 +37,7 @@
 		</license>
 	</licenses>
 	
-	<inceptionYear>2016</inceptionYear>
+	<inceptionYear>2017</inceptionYear>
 
 	<properties>
 		<java.version>1.8</java.version>
