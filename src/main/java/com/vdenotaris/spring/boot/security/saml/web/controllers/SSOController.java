@@ -62,7 +62,7 @@ public class SSOController {
 	}
 
 	/*
-	 * Checks if an HTTP request has been forwarded from servlet.
+	 * Checks if an HTTP request has been forwarded by a servlet.
 	 */
 	private boolean isForwarded(HttpServletRequest request){
 		if (request.getAttribute("javax.servlet.forward.request_uri") == null)
