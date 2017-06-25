@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.protocol.Protocol;
@@ -105,6 +108,22 @@ import com.vdenotaris.spring.boot.security.saml.web.core.SAMLUserDetailsServiceI
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
+	private Timer backgroundTaskTimer;
+	private MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager;
+	
+	@PostConstruct
+	public void init() {
+		this.backgroundTaskTimer = new Timer(true);
+		this.multiThreadedHttpConnectionManager = new MultiThreadedHttpConnectionManager();
+	}
+	
+	@PreDestroy
+	public void destroy() {
+		this.backgroundTaskTimer.purge();
+		this.backgroundTaskTimer.cancel();
+		this.multiThreadedHttpConnectionManager.shutdown();
+	}
+	
     @Autowired
     private SAMLUserDetailsServiceImpl samlUserDetailsServiceImpl;
      
@@ -127,13 +146,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     // Bindings, encoders and decoders used for creating and parsing messages
     @Bean
-    public MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager() {
-        return new MultiThreadedHttpConnectionManager();
-    }
- 
-    @Bean
     public HttpClient httpClient() {
-        return new HttpClient(multiThreadedHttpConnectionManager());
+        return new HttpClient(this.multiThreadedHttpConnectionManager);
     }
  
     // SAML Authentication Provider responsible for validating of received SAML
@@ -277,14 +291,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider()
 			throws MetadataProviderException {
 		String idpSSOCircleMetadataURL = "https://idp.ssocircle.com/idp-meta.xml";
-		Timer backgroundTaskTimer = new Timer(true);
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(
-				backgroundTaskTimer, httpClient(), idpSSOCircleMetadataURL);
+				this.backgroundTaskTimer, httpClient(), idpSSOCircleMetadataURL);
 		httpMetadataProvider.setParserPool(parserPool());
 		ExtendedMetadataDelegate extendedMetadataDelegate = 
 				new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
 		extendedMetadataDelegate.setMetadataTrustCheck(true);
 		extendedMetadataDelegate.setMetadataRequireSignature(false);
+		backgroundTaskTimer.purge();
 		return extendedMetadataDelegate;
 	}
  
