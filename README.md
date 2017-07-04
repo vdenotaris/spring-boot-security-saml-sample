@@ -24,7 +24,7 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 **SSOCircle** ([ssocircle.com](http://www.ssocircle.com/en/portfolio/publicidp/)) is used as public Identity Provider for test purpose.
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
-- **Website:** [vdenotaris.com](http://www.vdenotaris.com)
+- **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
 - **Version:**  ` 1.6.0.RELEASE `
 - **Last update**: June 25th, 2017
 
