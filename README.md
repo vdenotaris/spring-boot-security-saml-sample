@@ -1,4 +1,4 @@
-Spring Boot-based sample Service Provider [![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample) [![DOI](https://zenodo.org/badge/22013861.svg)](https://zenodo.org/badge/latestdoi/22013861)
+Spring Boot Sample SAML 2.0 Service Provider [![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample) [![DOI](https://zenodo.org/badge/22013861.svg)](https://zenodo.org/badge/latestdoi/22013861)
 ====================
 
 ## References
@@ -19,7 +19,7 @@ Spring SAML Extension allows seamless inclusion of SAML 2.0 Service Provider cap
 
 ## Project description
 
-This project represents a sample implementation of a **SAML 2.0 Service Provider**, completely built on **Spring Framework**. In particular, it shows how to develop a web solution devised for Federated Authentication, by integrating **Spring Boot** and **Spring SAML**. The configuration has been completely defined using *Java annotations* (no XML).
+This project represents a sample implementation of a **SAML 2.0 Service Provider**, completely built on **Spring Framework**. In particular, it shows how to develop a web solution devised for Federated Authentication, by integrating **Spring Boot** and **Spring Security SAML**. The configuration has been completely defined using *Java annotations* (no XML).
 
 **SSOCircle** ([ssocircle.com](http://www.ssocircle.com/en/portfolio/publicidp/)) is used as public Identity Provider for test purpose.
 
