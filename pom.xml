@@ -5,7 +5,7 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>1.6.0.RELEASE</version>
+	<version>1.7.0.RELEASE</version>
 	<packaging>war</packaging>
 
 	<!-- Project description -->
@@ -49,7 +49,7 @@
 	<parent>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>1.5.4.RELEASE</version>
+	    <version>1.5.7.RELEASE</version>
 	</parent>
 
 	<dependencies>
@@ -99,9 +99,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5</version>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-release-plugin</artifactId>
+  				<version>2.5.3</version>
 			</plugin>
 			<plugin>
     			<artifactId>maven-war-plugin</artifactId>
@@ -112,7 +112,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.5.201505241946</version>
+				<version>0.7.9</version>
 				<executions>
 					<execution>
 						<goals>
