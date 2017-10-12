@@ -1,0 +1,8 @@
+version: '3'
+services:
+  image: vdenotaris/spring-saml-sp
+  labels:
+    com.vdenotaris.spring.saml.sp.description: "A dockerized sample Spring Boot SAML 2.0 Service Provider"
+  spring-saml-sp:
+    ports:
+     - "8080:8080"
