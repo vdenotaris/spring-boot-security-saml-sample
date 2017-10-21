@@ -44,7 +44,7 @@ To make it even easier, it is possible to run the project "as-is" also as Docker
 **Run as container building a Docker image**
 
 ```
-docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp
+docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:1.8.0-mvn-jdk8
 ```
 
 *Note: the related Docker image is publicly available on [Docker Hub](https://hub.docker.com/r/vdenotaris/spring-saml-sp/).*
