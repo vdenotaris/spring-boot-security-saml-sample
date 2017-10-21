@@ -33,7 +33,7 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
 - **Version:**  ` 1.8.0.RELEASE `
-- **Last update**: October 12th, 2017
+- **Last update**: October 21th, 2017
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
@@ -76,10 +76,9 @@ I would like to say thank you to *Alexey Syrtsev* ([github.com/airleks](https://
 
 	    javax.net.ssl.SSLPeerUnverifiedException: SSL peer failed hostname validation for name: null
 
-    To update the certificates in the keystore run the following commands: 
+To update the SSOCircle certificates within the keystore, just run: 
 
-		cd src/main/resources/saml/  
-		./update-certifcate.sh 
+	 cd src/main/resources/saml/ && sh ./update-certifcate.sh 
 
 2. Sometimes SSO Circle could display you an error during the authenticaton process. In this case, please update your federation metadata directly on [https://idp.ssocircle.com](https://idp.ssocircle.com):
 
