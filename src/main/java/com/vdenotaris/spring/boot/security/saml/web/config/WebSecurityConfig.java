@@ -539,8 +539,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
            		.antMatchers("/saml/**").permitAll()
            		.anyRequest().authenticated();
         http
-            .logout()
-                .logoutSuccessUrl("/");
+        		.logout()
+        			.disable();	// The logout procedure is already handled by SAML filters.
     }
  
     /**
