@@ -33,8 +33,8 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 1.8.0.RELEASE `
-- **Last update**: October 21th, 2017
+- **Version:**  ` 2.0.0.BUILD-SNAPSHOT `
+- **Last update**: May 21th, 2018
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
@@ -99,7 +99,7 @@ To update the SSOCircle certificates within the keystore, just run:
 
 ### License
 
-    Copyright 2017 Vincenzo De Notaris
+    Copyright 2018 Vincenzo De Notaris
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.

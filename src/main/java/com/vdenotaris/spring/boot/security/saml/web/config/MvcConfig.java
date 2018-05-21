@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Vincenzo De Notaris
+ * Copyright 2018 Vincenzo De Notaris
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.vdenotaris.spring.boot.security.saml.web.core.CurrentUserHandlerMethodArgumentResolver;
 
 @Configuration
-public class MvcConfig extends WebMvcConfigurerAdapter {
+@EnableWebMvc
+public class MvcConfig implements WebMvcConfigurer {
 
 	@Autowired
 	CurrentUserHandlerMethodArgumentResolver currentUserHandlerMethodArgumentResolver;
@@ -40,7 +42,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers){
-    	argumentResolvers.add(currentUserHandlerMethodArgumentResolver);
+    		argumentResolvers.add(currentUserHandlerMethodArgumentResolver);
     }
 
 }
