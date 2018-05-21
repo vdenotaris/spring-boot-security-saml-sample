@@ -116,7 +116,7 @@
 			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
   				<artifactId>maven-release-plugin</artifactId>
-  				<version>2.5.3</version>
+  				<version>3.0.4</version>
 			</plugin>
 			<plugin>
     			<artifactId>maven-war-plugin</artifactId>
