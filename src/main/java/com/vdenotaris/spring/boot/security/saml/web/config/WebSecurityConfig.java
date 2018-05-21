@@ -528,7 +528,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .httpBasic()
                 .authenticationEntryPoint(samlEntryPoint());      
-        http.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
+        http
+        		.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
         		.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class)
         		.addFilterBefore(samlFilter(), CsrfFilter.class);
         http        
