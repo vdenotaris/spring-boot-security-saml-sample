@@ -74,7 +74,7 @@ public class SSOControllerTest extends CommonTestSupport {
     @Test
     @WithMockUser
     public void testIdpSelectionWithUser() throws Exception {
-        mockMvc.perform(get("/saml/idpSelection"))
+        mockMvc.perform(get("/saml/discovery"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/landing"));
     }
@@ -85,10 +85,10 @@ public class SSOControllerTest extends CommonTestSupport {
         when(metadata.getIDPEntityNames()).thenReturn(IDPS);
 
         // when / then
-        mockMvc.perform(get("/saml/idpSelection").session(mockAnonymousHttpSession()))
+        mockMvc.perform(get("/saml/discovery").session(mockAnonymousHttpSession()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("idps", IDPS))
-                .andExpect(view().name("saml/idpselection"));
+                .andExpect(view().name("discovery"));
     }
 
 }

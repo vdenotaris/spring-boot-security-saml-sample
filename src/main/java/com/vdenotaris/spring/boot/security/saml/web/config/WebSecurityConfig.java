@@ -283,7 +283,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SAMLDiscovery samlIDPDiscovery() {
         SAMLDiscovery idpDiscovery = new SAMLDiscovery();
-        idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+        idpDiscovery.setIdpSelectionPath("/saml/discovery");
         return idpDiscovery;
     }
     
@@ -537,6 +537,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
            		.antMatchers("/").permitAll()
            		.antMatchers("/error").permitAll()
            		.antMatchers("/saml/**").permitAll()
+           		.antMatchers("/css/**").permitAll()
+           		.antMatchers("/img/**").permitAll()
+           		.antMatchers("/js/**").permitAll()
            		.anyRequest().authenticated();
         http
         		.logout()

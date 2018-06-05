@@ -43,7 +43,7 @@ public class SSOController {
 	@Autowired
 	private MetadataManager metadata;
 
-	@RequestMapping(value = "/idpSelection", method = RequestMethod.GET)
+	@RequestMapping(value = "/discovery", method = RequestMethod.GET)
 	public String idpSelection(HttpServletRequest request, Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null)
@@ -56,7 +56,7 @@ public class SSOController {
 			for (String idp : idps)
 				LOG.info("Configured Identity Provider for SSO: " + idp);
 			model.addAttribute("idps", idps);
-			return "saml/idpselection";
+			return "discovery";
 		} else {
 			LOG.warn("The current user is already logged.");
 			return "redirect:/landing";
