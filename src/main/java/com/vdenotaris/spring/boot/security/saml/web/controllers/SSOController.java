@@ -56,7 +56,7 @@ public class SSOController {
 			for (String idp : idps)
 				LOG.info("Configured Identity Provider for SSO: " + idp);
 			model.addAttribute("idps", idps);
-			return "discovery";
+			return "pages/discovery";
 		} else {
 			LOG.warn("The current user is already logged.");
 			return "redirect:/landing";

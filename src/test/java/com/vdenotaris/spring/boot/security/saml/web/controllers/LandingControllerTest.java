@@ -69,7 +69,7 @@ public class LandingControllerTest extends CommonTestSupport {
         mockMvc.perform(get("/landing").session(mockHttpSession(true)))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("username", USER_NAME))
-                .andExpect(view().name("landing"));
+                .andExpect(view().name("pages/landing"));
     }
 
     private static class MockArgumentResolver implements HandlerMethodArgumentResolver

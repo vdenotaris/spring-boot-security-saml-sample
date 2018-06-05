@@ -43,7 +43,7 @@ public class LandingController {
 			LOG.debug("Current authentication instance from security context: "
 					+ this.getClass().getSimpleName());
 		model.addAttribute("username", 	user.getUsername());
-		return "landing";
+		return "pages/landing";
 	}
 
 }

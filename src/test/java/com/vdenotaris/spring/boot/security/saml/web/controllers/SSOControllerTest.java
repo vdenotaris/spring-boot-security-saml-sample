@@ -88,7 +88,7 @@ public class SSOControllerTest extends CommonTestSupport {
         mockMvc.perform(get("/saml/discovery").session(mockAnonymousHttpSession()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("idps", IDPS))
-                .andExpect(view().name("discovery"));
+                .andExpect(view().name("pages/discovery"));
     }
 
 }
