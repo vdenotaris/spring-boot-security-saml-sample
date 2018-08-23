@@ -28,8 +28,6 @@ import javax.annotation.PreDestroy;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.velocity.app.VelocityEngine;
 import org.opensaml.saml2.metadata.provider.HTTPMetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
@@ -38,7 +36,6 @@ import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -76,7 +73,6 @@ import org.springframework.security.saml.processor.HTTPSOAP11Binding;
 import org.springframework.security.saml.processor.SAMLBinding;
 import org.springframework.security.saml.processor.SAMLProcessorImpl;
 import org.springframework.security.saml.trust.httpclient.TLSProtocolConfigurer;
-import org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory;
 import org.springframework.security.saml.util.VelocityFactory;
 import org.springframework.security.saml.websso.ArtifactResolutionProfile;
 import org.springframework.security.saml.websso.ArtifactResolutionProfileImpl;
@@ -230,26 +226,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public TLSProtocolConfigurer tlsProtocolConfigurer() {
     	return new TLSProtocolConfigurer();
-    }
-    
-    @Bean
-    public ProtocolSocketFactory socketFactory() {
-        return new TLSProtocolSocketFactory(keyManager(), null, "default");
-    }
-
-    @Bean
-    public Protocol socketFactoryProtocol() {
-        return new Protocol("https", socketFactory(), 443);
-    }
-
-    @Bean
-    public MethodInvokingFactoryBean socketFactoryInitialization() {
-        MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
-        methodInvokingFactoryBean.setTargetClass(Protocol.class);
-        methodInvokingFactoryBean.setTargetMethod("registerProtocol");
-        Object[] args = {"https", socketFactoryProtocol()};
-        methodInvokingFactoryBean.setArguments(args);
-        return methodInvokingFactoryBean;
     }
     
     @Bean
