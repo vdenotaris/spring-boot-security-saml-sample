@@ -1,3 +1,5 @@
+![logo](https://i.ibb.co/9wBDF43/logo.png)
+
 Spring Boot Sample SAML 2.0 Service Provider
 ====================
 
