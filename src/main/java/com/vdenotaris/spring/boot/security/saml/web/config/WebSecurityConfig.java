@@ -515,7 +515,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements I
         http        
             .authorizeRequests()
            		.antMatchers("/").permitAll()
-           		.antMatchers("/error").permitAll()
            		.antMatchers("/saml/**").permitAll()
            		.antMatchers("/css/**").permitAll()
            		.antMatchers("/img/**").permitAll()
