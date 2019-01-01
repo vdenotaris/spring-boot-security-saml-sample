@@ -1,5 +1,24 @@
+# Ignore list
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
 .DS_Store
 
+# Maven
+log/
+target/
+hs_err_pid*
+
+# Misc
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -9,8 +28,3 @@
 *.jar
 *.war
 *.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-/target
-/logs
