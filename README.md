@@ -120,8 +120,5 @@ To update the SSOCircle certificates within the keystore, just run:
 ## Support on Beerpay
 Hey dude! Help me out for a couple of :beers:!
 
-<<<<<<< HEAD
 [![Beerpay](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample/badge.svg?style=beer-square)](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample)  [![Beerpay](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample/make-wish.svg?style=flat-square)](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample?focus=wish)
-=======
-[![Beerpay](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample/badge.svg?style=beer-square)](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample)  [![Beerpay](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample/make-wish.svg?style=flat-square)](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample?focus=wish)
->>>>>>> new/spring5
+
