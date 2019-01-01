@@ -37,8 +37,8 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 2.0.0.BUILD-SNAPSHOT `
-- **Last update**: Dec 30th, 2018
+- **Version:**  ` 2.0.0.RC `
+- **Last update**: Jan 1st, 2019
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
@@ -51,7 +51,7 @@ To make it even easier, it is possible to run the project "as-is" also as Docker
 **Run as container building a Docker image**
 
 ```
-docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:1.8.0-mvn-jdk8
+docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:2.0.0
 ```
 
 *Note: the related Docker image is publicly available on [Docker Hub](https://hub.docker.com/r/vdenotaris/spring-saml-sp/).*
@@ -103,7 +103,7 @@ To update the SSOCircle certificates within the keystore, just run:
 
 ### License
 
-    Copyright 2018 Vincenzo De Notaris
+    Copyright 2019 Vincenzo De Notaris
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
