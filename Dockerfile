@@ -52,12 +52,6 @@ MAINTAINER Vincenzo De Notaris (dev@vdenotaris.com)
 # Add a volume pointing to /tmp
 VOLUME /tmp
 
-# Create a group and user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-
-# All future commands must run as the appuser user
-USER appuser
-
 # Get the packed fat-JAR
 COPY --from=build /usr/src/app/target/spring-boot-security-saml*.jar /usr/app/springsamlsp.jar 
 
