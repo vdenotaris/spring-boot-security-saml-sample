@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Vincenzo De Notaris
+ * Copyright 2019 Vincenzo De Notaris
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.saml.metadata.MetadataManager;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -71,31 +72,23 @@ public class SSOControllerTest extends CommonTestSupport {
     }
 
     @Test
-    public void testIdpSelection() throws Exception {
-        mockMvc.perform(get("/saml/idpSelection").session(mockHttpSession(false)))
+    @WithMockUser
+    public void testIdpSelectionWithUser() throws Exception {
+        mockMvc.perform(get("/saml/discovery"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("redirect:/landing"));
     }
 
     @Test
-    public void testIdpSelectionWithoutForwarding() throws Exception {
-        mockMvc.perform(get("/saml/idpSelection").session(mockAnonymousHttpSession()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("redirect:/"));
-    }
-
-    @Test
-    public void testIdpSelectionWithForwarding() throws Exception {
+    public void testIdpSelection() throws Exception {
         // given
         when(metadata.getIDPEntityNames()).thenReturn(IDPS);
 
         // when / then
-        mockMvc.perform(get("/saml/idpSelection").session(mockAnonymousHttpSession())
-                .requestAttr("javax.servlet.forward.request_uri", "http://forward.to")
-        )
+        mockMvc.perform(get("/saml/discovery").session(mockAnonymousHttpSession()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("idps", IDPS))
-                .andExpect(view().name("saml/idpselection"));
+                .andExpect(view().name("pages/discovery"));
     }
 
 }

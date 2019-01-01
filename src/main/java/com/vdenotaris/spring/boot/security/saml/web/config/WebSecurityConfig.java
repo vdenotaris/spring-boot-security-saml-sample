@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Vincenzo De Notaris
+ * Copyright 2019 Vincenzo De Notaris
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.protocol.Protocol;
@@ -39,6 +36,8 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -99,6 +98,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.vdenotaris.spring.boot.security.saml.web.core.SAMLUserDetailsServiceImpl;
@@ -106,19 +106,17 @@ import com.vdenotaris.spring.boot.security.saml.web.core.SAMLUserDetailsServiceI
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements InitializingBean, DisposableBean {
  
 	private Timer backgroundTaskTimer;
 	private MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager;
-	
-	@PostConstruct
+
 	public void init() {
 		this.backgroundTaskTimer = new Timer(true);
 		this.multiThreadedHttpConnectionManager = new MultiThreadedHttpConnectionManager();
 	}
-	
-	@PreDestroy
-	public void destroy() {
+
+	public void shutdown() {
 		this.backgroundTaskTimer.purge();
 		this.backgroundTaskTimer.cancel();
 		this.multiThreadedHttpConnectionManager.shutdown();
@@ -271,18 +269,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Setup advanced info about metadata
     @Bean
     public ExtendedMetadata extendedMetadata() {
-    	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
-    	extendedMetadata.setIdpDiscoveryEnabled(true); 
-    	extendedMetadata.setSignMetadata(false);
-    	extendedMetadata.setEcpEnabled(true);
-    	return extendedMetadata;
+	    	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
+	    	extendedMetadata.setIdpDiscoveryEnabled(true); 
+	    	extendedMetadata.setSignMetadata(false);
+	    	extendedMetadata.setEcpEnabled(true);
+	    	return extendedMetadata;
     }
     
     // IDP Discovery Service
     @Bean
     public SAMLDiscovery samlIDPDiscovery() {
         SAMLDiscovery idpDiscovery = new SAMLDiscovery();
-        idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+        idpDiscovery.setIdpSelectionPath("/saml/discovery");
         return idpDiscovery;
     }
     
@@ -301,7 +299,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		backgroundTaskTimer.purge();
 		return extendedMetadataDelegate;
 	}
- 
+
     // IDP Metadata configuration - paths to metadata of IDPs in circle of trust
     // is here
     // Do no forget to call iniitalize method on providers
@@ -343,11 +341,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// Handler deciding where to redirect user after failed login
     @Bean
     public SimpleUrlAuthenticationFailureHandler authenticationFailureHandler() {
-    	SimpleUrlAuthenticationFailureHandler failureHandler =
-    			new SimpleUrlAuthenticationFailureHandler();
-    	failureHandler.setUseForward(true);
-    	failureHandler.setDefaultFailureUrl("/error");
-    	return failureHandler;
+	    	SimpleUrlAuthenticationFailureHandler failureHandler =
+	    			new SimpleUrlAuthenticationFailureHandler();
+	    	failureHandler.setUseForward(true);
+	    	failureHandler.setDefaultFailureUrl("/error");
+	    	return failureHandler;
     }
      
     @Bean
@@ -430,12 +428,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Bean
     public HTTPPostBinding httpPostBinding() {
-    	return new HTTPPostBinding(parserPool(), velocityEngine());
+    		return new HTTPPostBinding(parserPool(), velocityEngine());
     }
     
     @Bean
     public HTTPRedirectDeflateBinding httpRedirectDeflateBinding() {
-    	return new HTTPRedirectDeflateBinding(parserPool());
+    		return new HTTPRedirectDeflateBinding(parserPool());
     }
     
     @Bean
@@ -445,7 +443,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Bean
     public HTTPPAOS11Binding httpPAOS11Binding() {
-    	return new HTTPPAOS11Binding(parserPool());
+    		return new HTTPPAOS11Binding(parserPool());
     }
     
     // Processor
@@ -509,22 +507,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .httpBasic()
-                .authenticationEntryPoint(samlEntryPoint());
+                .authenticationEntryPoint(samlEntryPoint());      
         http
-        	.csrf()
-        		.disable();
-        http
-            .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
-            .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class);
+        		.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
+        		.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class)
+        		.addFilterBefore(samlFilter(), CsrfFilter.class);
         http        
             .authorizeRequests()
-            .antMatchers("/").permitAll()
-            .antMatchers("/error").permitAll()
-            .antMatchers("/saml/**").permitAll()
-            .anyRequest().authenticated();
+           		.antMatchers("/").permitAll()
+           		.antMatchers("/saml/**").permitAll()
+           		.antMatchers("/css/**").permitAll()
+           		.antMatchers("/img/**").permitAll()
+           		.antMatchers("/js/**").permitAll()
+           		.anyRequest().authenticated();
         http
-            .logout()
-                .logoutSuccessUrl("/");
+        		.logout()
+        			.disable();	// The logout procedure is already handled by SAML filters.
     }
  
     /**
@@ -537,6 +535,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .authenticationProvider(samlAuthenticationProvider());
-    }   
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        init();
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        shutdown();
+    }
 
 }
