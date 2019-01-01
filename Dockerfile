@@ -52,13 +52,22 @@ MAINTAINER Vincenzo De Notaris (dev@vdenotaris.com)
 # Add a volume pointing to /tmp
 VOLUME /tmp
 
+# Create a group and user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# All future commands should run as the appuser user	
+USER appuser
+
+# Setup working directory
+WORKDIR /home/appuser
+
 # Get the packed fat-JAR
-COPY --from=build /usr/src/app/target/spring-boot-security-saml*.jar /usr/app/springsamlsp.jar 
+COPY --from=build /usr/src/app/target/spring-boot-security-saml*.jar /home/appuser/app/springsamlsp.jar 
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
 # Setup application entry point
-ENTRYPOINT ["java","-jar","/usr/app/springsamlsp.jar"]  
+ENTRYPOINT ["java","-jar","/home/appuser/app/springsamlsp.jar"]  
 
 ############################################################################
