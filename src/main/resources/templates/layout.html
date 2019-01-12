@@ -1,0 +1,82 @@
+<!--
+    Source: https://github.com/vdenotaris/spring-boot-security-saml-sample
+    Copyright 2019 Vincenzo De Notaris 
+    Licensed under the Apache License, Version 2.0 (the "License").
+-->
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Spring Boot - SAML 2.0 Service Provider">
+  <meta name="author" content="Vincenzo De Notaris">
+  <link rel="icon" th:href="@{/img/favicon.ico}">
+  <title>Spring Boot &mdash; SAML 2.0 Service Provider</title>
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/spring-saml-sp.css}" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+  <!-- Main starts -->
+  <div role="main" class="container">
+  	<!-- Header starts -->
+    <header role="header" class="d-flex align-items-center p-3 my-3 text-white-50 bg-spring-green rounded box-shadow">
+      <img class="mr-3" th:src="@{/img/spring-boot-saml.png}" alt="" height="48">
+      <div class="lh-100">
+        <h6 class="mb-0 text-white lh-100">Spring Boot &mdash; SAML 2.0 Service Provider</h6>
+        <small>
+          <span class="badge badge-light">
+            <i class="fas fa-code-branch"></i> github.com/spring-boot-security-saml-sample:2.0.0
+          </span>
+        </small>
+      </div>
+    </header>
+    <!-- Header ends -->
+    <!-- Content starts -->
+    <section role="content" class="my-3 p-3 bg-white rounded box-shadow" layout:fragment="content">
+		<!-- Page content goes here! -->
+    </section>
+    <!-- Content ends -->
+    <!-- Footer starts -->
+    <footer role="footer">
+        <ul class="footer-note">
+          <li>
+            <i class="far fa-copyright"></i> Copyright 2019 &mdash;
+            <i class="fab fa-linkedin"></i>
+            <a href="https://www.linkedin.com/in/vdenotaris/">Vincenzo De Notaris</a>
+          </li>
+          <li>
+            <i class="fas fa-balance-scale"></i> Licensed under the
+            <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>
+          </li>
+          <li>
+            <i class="fab fa-github"></i> GitHub:
+            <a href="https://github.com/vdenotaris/spring-boot-security-saml-sample">vdenotaris/spring-boot-security-saml-sample</a>
+          </li>
+          <li>
+            <i class="fab fa-docker"></i> Docker Hub:
+            <a href="https://hub.docker.com/r/vdenotaris/spring-saml-sp/">vdenotaris/spring-saml-sp</a>
+          </li>
+          <li>
+            <i class="fab fa-stack-overflow"></i> Get supported on StackOverflow:
+            <a href="https://stackoverflow.com/questions/tagged/spring-saml">#spring-saml</a>
+          </li>
+          <li class="margin-top-10">Wanna say thanks to the developer? <i class="fas fa-beer"></i> <a href="https://beerpay.io/vdenotaris/spring-boot-security-saml-sample">Pay him a beer!</a></li>
+        </ul>
+    </footer>
+    <!-- Footer ends -->
+  </div>
+  <!-- Main ends -->
+  <!-- Bootstrap scripts -->
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+  <!-- Font Awesome scripts -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
+</body>
+
+</html>

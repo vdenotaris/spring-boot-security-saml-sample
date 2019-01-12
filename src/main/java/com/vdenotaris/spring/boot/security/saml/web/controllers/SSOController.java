@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Vincenzo De Notaris
+ * Copyright 2019 Vincenzo De Notaris
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.saml.metadata.MetadataManager;
 import org.springframework.stereotype.Controller;
@@ -42,33 +43,24 @@ public class SSOController {
 	@Autowired
 	private MetadataManager metadata;
 
-	@RequestMapping(value = "/idpSelection", method = RequestMethod.GET)
+	@RequestMapping(value = "/discovery", method = RequestMethod.GET)
 	public String idpSelection(HttpServletRequest request, Model model) {
-		if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth == null)
+			LOG.debug("Current authentication instance from security context is null");
+		else
+			LOG.debug("Current authentication instance from security context: "
+					+ this.getClass().getSimpleName());
+		if (auth == null || (auth instanceof AnonymousAuthenticationToken)) {
+			Set<String> idps = metadata.getIDPEntityNames();
+			for (String idp : idps)
+				LOG.info("Configured Identity Provider for SSO: " + idp);
+			model.addAttribute("idps", idps);
+			return "pages/discovery";
+		} else {
 			LOG.warn("The current user is already logged.");
 			return "redirect:/landing";
-		} else {
-			if (isForwarded(request)) {
-				Set<String> idps = metadata.getIDPEntityNames();
-				for (String idp : idps)
-					LOG.info("Configured Identity Provider for SSO: " + idp);
-				model.addAttribute("idps", idps);
-				return "saml/idpselection";
-			} else {
-				LOG.warn("Direct accesses to '/idpSelection' route are not allowed");
-				return "redirect:/";
-			}
 		}
-	}
-
-	/*
-	 * Checks if an HTTP request has been forwarded by a servlet.
-	 */
-	private boolean isForwarded(HttpServletRequest request){
-		if (request.getAttribute("javax.servlet.forward.request_uri") == null)
-			return false;
-		else
-			return true;
 	}
 
 }

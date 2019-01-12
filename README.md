@@ -1,11 +1,15 @@
+![logo](https://i.ibb.co/CKbFBzH/logo-small.png)
+
 Spring Boot Sample SAML 2.0 Service Provider
 ====================
 
- [![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample)
- [![DOI](https://zenodo.org/badge/22013861.svg)](https://zenodo.org/badge/latestdoi/22013861)
+[![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample)
+[![DOI](https://zenodo.org/badge/22013861.svg)](https://zenodo.org/badge/latestdoi/22013861)
+![GitHub release](https://img.shields.io/github/release/vdenotaris/spring-boot-security-saml-sample.svg)
 [![GitHub forks](https://img.shields.io/github/forks/vdenotaris/spring-boot-security-saml-sample.svg)](https://github.com/vdenotaris/spring-boot-security-saml-sample/network)
 [![GitHub stars](https://img.shields.io/github/stars/vdenotaris/spring-boot-security-saml-sample.svg)](https://github.com/vdenotaris/spring-boot-security-saml-sample/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/vdenotaris/spring-boot-security-saml-sample/master/LICENSE)
+![Beerpay](https://img.shields.io/beerpay/vdenotaris/spring-boot-security-saml-sample.svg)
 
 ---------
 
@@ -33,8 +37,8 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 1.8.0.RELEASE `
-- **Last update**: October 21th, 2017
+- **Version:**  ` 2.0.0.RELEASE`
+- **Last update**: January 1st, 2019
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
@@ -47,7 +51,7 @@ To make it even easier, it is possible to run the project "as-is" also as Docker
 **Run as container building a Docker image**
 
 ```
-docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:1.8.0-mvn-jdk8
+docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:2.0.0-openjdk8
 ```
 
 *Note: the related Docker image is publicly available on [Docker Hub](https://hub.docker.com/r/vdenotaris/spring-saml-sp/).*
@@ -99,7 +103,7 @@ To update the SSOCircle certificates within the keystore, just run:
 
 ### License
 
-    Copyright 2017 Vincenzo De Notaris
+    Copyright 2019 Vincenzo De Notaris
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
@@ -117,3 +121,4 @@ To update the SSOCircle certificates within the keystore, just run:
 Hey dude! Help me out for a couple of :beers:!
 
 [![Beerpay](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample/badge.svg?style=beer-square)](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample)  [![Beerpay](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample/make-wish.svg?style=flat-square)](https://beerpay.io/vdenotaris/spring-boot-security-saml-sample?focus=wish)
+

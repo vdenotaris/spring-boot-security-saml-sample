@@ -5,12 +5,12 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>1.8.0.RELEASE</version>
-	<packaging>war</packaging>
+	<version>2.0.0.RELEASE</version>
+	<packaging>jar</packaging>
 
 	<!-- Project description -->
-	<name>Spring Boot and Spring Security SAML integration sample</name>
-	<description>Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a Service Provider (SP) which uses Spring Boot and Spring Security SAML Extension, by defining an annotation-based configuration (Java Configuration). Thymeleaf is also used as template engine.</description>
+	<name>Spring Boot sample SAML 2.0 Service Provider</name>
+	<description>A sample SAML 2.0 Service Provider built on Spring Boot.</description>
 	<url>https://github.com/vdenotaris/spring-boot-security-saml-sample</url>
 	
 	<developers>
@@ -18,7 +18,7 @@
 			<id>vdenotaris</id>
 			<name>Vincenzo De Notaris</name>
 			<email>dev@vdenotaris.com</email>
-			<timezone>+1</timezone>
+			<timezone>CET/CEST</timezone>
 		</developer>
 	</developers>
 	<contributors>
@@ -37,7 +37,7 @@
 		</license>
 	</licenses>
 	
-	<inceptionYear>2017</inceptionYear>
+	<inceptionYear>2019</inceptionYear>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -46,10 +46,11 @@
 		<start-class>com.vdenotaris.spring.boot.security.saml.web.Application</start-class>
 	</properties>
 
+	<!-- Inherit defaults from Spring Boot -->
 	<parent>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>1.5.7.RELEASE</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.1.RELEASE</version>
 	</parent>
 
 	<dependencies>
@@ -69,6 +70,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
@@ -76,18 +81,28 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+  			<groupId>nz.net.ultraq.thymeleaf</groupId>
+  			<artifactId>thymeleaf-layout-dialect</artifactId>
 		</dependency>
 		<dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-starter-tomcat</artifactId>
-        	<scope>provided</scope>
-    	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+        	</dependency>
+		<dependency>
+        		<groupId>org.springframework.boot</groupId>
+        		<artifactId>spring-boot-starter-tomcat</artifactId>
+        		<scope>provided</scope>
+    		</dependency>
 		<dependency>
 			<groupId>org.springframework.security.extensions</groupId>
 			<artifactId>spring-security-saml2-core</artifactId>
-			<version>1.0.2.RELEASE</version>
+			<version>1.0.3.RELEASE</version>
 		</dependency>
 	</dependencies>
 	
@@ -104,20 +119,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-release-plugin</artifactId>
-  				<version>2.5.3</version>
-			</plugin>
-			<plugin>
-    			<artifactId>maven-war-plugin</artifactId>
-    			<configuration>
-        			<failOnMissingWebXml>false</failOnMissingWebXml>
-    			</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.9</version>
+				<version>0.8.2</version>
 				<executions>
 					<execution>
 						<goals>
