@@ -1,6 +1,6 @@
 ![logo](https://i.ibb.co/CKbFBzH/logo-small.png)
 
-SBS3 - Spring Boot Sample SAML 2.0 Service Provider
+[SBS3] Spring Boot Sample SAML 2.0 Service Provider
 ====================
 
 [![Build Status](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample.svg?branch=master)](https://travis-ci.org/vdenotaris/spring-boot-security-saml-sample)
