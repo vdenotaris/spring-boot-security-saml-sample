@@ -1,4 +1,16 @@
+---
+title: SBS3
+description: SAML 2.0 Service Provider based on Spring Boot.
+topic: IAM, Web-SSO
+prod: SAML 2.0 Service Provider
+technology: Java, Spring Framework
+author: Vincenzo De Notaris
+eta: 5 years (2014-present)
+license: Apache 2.0
+---
+
 ![logo](https://i.ibb.co/CKbFBzH/logo-small.png)
+
 
 [SBS3] Spring Boot Sample SAML 2.0 Service Provider
 ====================
