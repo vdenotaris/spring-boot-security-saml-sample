@@ -37,8 +37,8 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 2.0.1.RELEASE`
-- **Last update**: January 17th, 2019
+- **Version:**  ` 2.1.0.RELEASE`
+- **Last update**: March 24th, 2019
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
@@ -51,7 +51,7 @@ To make it even easier, it is possible to run the project "as-is" also as Docker
 **Run as container building a Docker image**
 
 ```
-docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:2.0.1-openjdk8
+docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:2.1.0-openjdk8
 ```
 
 *Note: the related Docker image is publicly available on [Docker Hub](https://hub.docker.com/r/vdenotaris/spring-saml-sp/).*

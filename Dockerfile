@@ -22,7 +22,7 @@ FROM maven:3.6.0-jdk-8-alpine AS build
 # Upgrade Alpine packages and install OpenSSL
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache openssl
+    apk add --no-cache openssl nss-dev nss
 
 # Copy the source code
 COPY src /usr/src/app/src  
