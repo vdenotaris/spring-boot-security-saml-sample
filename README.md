@@ -21,8 +21,8 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 2.1.0.RELEASE`
-- **Last update**: March 24th, 2019
+- **Version:**  ` 2.2.0.SNAPSHOT`
+- **Last update**: June 1st, 2019
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
