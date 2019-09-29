@@ -16,7 +16,7 @@
 #                                                                          #
 ############################################################################
 
-# Use Maven to pack a standalone executable fat-JAR file.
+# Use Maven to pack a standalone executable fat-JAR file
 FROM maven:3.6.0-jdk-8-alpine AS build
 
 # Upgrade Alpine packages and install OpenSSL
