@@ -5,7 +5,7 @@
 
 	<groupId>com.vdenotaris.spring</groupId>
 	<artifactId>spring-boot-security-saml-sample</artifactId>
-	<version>2.2.0-RELEASE</version>
+	<version>2.2.0.RELEASE</version>
 	<packaging>jar</packaging>
 
 	<!-- Project description -->
