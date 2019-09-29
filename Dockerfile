@@ -47,7 +47,7 @@ RUN mvn -T 1C -f /usr/src/app/pom.xml clean package
 FROM openjdk:8-jdk-alpine
 
 # Project maintainer
-MAINTAINER Vincenzo De Notaris (dev@vdenotaris.com)
+LABEL maintainer="dev@vdenotaris.com"
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
