@@ -71,7 +71,6 @@ import org.springframework.security.saml.processor.HTTPRedirectDeflateBinding;
 import org.springframework.security.saml.processor.HTTPSOAP11Binding;
 import org.springframework.security.saml.processor.SAMLBinding;
 import org.springframework.security.saml.processor.SAMLProcessorImpl;
-import org.springframework.security.saml.trust.httpclient.TLSProtocolConfigurer;
 import org.springframework.security.saml.util.VelocityFactory;
 import org.springframework.security.saml.websso.ArtifactResolutionProfile;
 import org.springframework.security.saml.websso.ArtifactResolutionProfileImpl;
@@ -219,12 +218,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements I
         String defaultKey = "apollo";
         return new JKSKeyManager(storeFile, storePass, passwords, defaultKey);
     }
- 
-    // Setup TLS Socket Factory
-    @Bean
-    public TLSProtocolConfigurer tlsProtocolConfigurer() {
-    	return new TLSProtocolConfigurer();
-    }
     
     @Bean
     public WebSSOProfileOptions defaultWebSSOProfileOptions() {
@@ -245,11 +238,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements I
     // Setup advanced info about metadata
     @Bean
     public ExtendedMetadata extendedMetadata() {
-	    	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
-	    	extendedMetadata.setIdpDiscoveryEnabled(true); 
-	    	extendedMetadata.setSignMetadata(false);
-	    	extendedMetadata.setEcpEnabled(true);
-	    	return extendedMetadata;
+	    ExtendedMetadata extendedMetadata = new ExtendedMetadata();
+	    extendedMetadata.setIdpDiscoveryEnabled(true);
+	    extendedMetadata.setSigningAlgorithm("http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
+	    extendedMetadata.setSignMetadata(true);
+	    extendedMetadata.setEcpEnabled(true);
+	    return extendedMetadata;
     }
     
     // IDP Discovery Service
@@ -264,7 +258,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements I
 	@Qualifier("idp-ssocircle")
 	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider()
 			throws MetadataProviderException {
-		String idpSSOCircleMetadataURL = "https://idp.ssocircle.com/idp-meta.xml";
+		String idpSSOCircleMetadataURL = "https://idp.ssocircle.com/meta-idp.xml";
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(
 				this.backgroundTaskTimer, httpClient(), idpSSOCircleMetadataURL);
 		httpMetadataProvider.setParserPool(parserPool());
