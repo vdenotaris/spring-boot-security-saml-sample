@@ -15,6 +15,7 @@
 
 # Maven
 log/
+logs/
 target/
 hs_err_pid*
 
