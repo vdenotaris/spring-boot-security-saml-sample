@@ -47,8 +47,8 @@
     </parent>
     <repositories>
         <repository>
-            <id>Shibbolet</id>
-            <name>Shibbolet</name>
+            <id>Shibboleth</id>
+            <name>Shibboleth</name>
             <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
         </repository>
     </repositories>
