@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vdenotaris.spring</groupId>
     <artifactId>spring-boot-security-saml-sample</artifactId>
-    <version>2.3.0.RELEASE</version>
+    <version>2.3.1.RELEASE</version>
     <packaging>jar</packaging>
     <!-- Project description -->
     <name>Spring Boot sample SAML 2.0 Service Provider</name>
