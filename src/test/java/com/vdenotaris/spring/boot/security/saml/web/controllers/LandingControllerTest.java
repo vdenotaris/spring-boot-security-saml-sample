@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Vincenzo De Notaris
+ * Copyright 2021 Vincenzo De Notaris
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,15 @@ package com.vdenotaris.spring.boot.security.saml.web.controllers;
 
 import com.vdenotaris.spring.boot.security.saml.web.CommonTestSupport;
 import com.vdenotaris.spring.boot.security.saml.web.TestConfig;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -42,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfig.class})
 @WebAppConfiguration
 public class LandingControllerTest extends CommonTestSupport {
@@ -55,17 +54,17 @@ public class LandingControllerTest extends CommonTestSupport {
 
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
-        MockitoAnnotations.initMocks(this);
         mockMvc = standaloneSetup(landingController)
                 .setCustomArgumentResolvers(new MockArgumentResolver())
                 .setSingleView(mockView).build();
     }
 
     @Test
-    public void testAnonymousLanding() throws Exception {
+    public void testAnonymousLanding() throws Exception
+    {
         mockMvc.perform(get("/landing").session(mockHttpSession(true)))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("username", USER_NAME))

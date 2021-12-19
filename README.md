@@ -20,8 +20,8 @@ This project represents a sample implementation of a **SAML 2.0 Service Provider
 
 - **Author:** Vincenzo De Notaris ([dev@vdenotaris.com](mailto:dev@vdenotaris.com))
 - **Website:** [www.vdenotaris.com](http://www.vdenotaris.com)
-- **Version:**  ` 2.3.1.RELEASE`
-- **Last update**: February 15th, 2020
+- **Version:**  ` 2.4.0.RELEASE`
+- **Last update**: December 19th, 2021
 
 Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafer)) for supporting my work.
 
@@ -36,6 +36,18 @@ Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafe
 
 > Spring SAML Extension allows seamless inclusion of SAML 2.0 Service Provider capabilities in Spring applications. All products supporting SAML 2.0 in Identity Provider mode (e.g. ADFS 2.0, Shibboleth, OpenAM/OpenSSO, Ping Federate, Okta) can be used to connect with Spring SAML Extension.
 > - **Ref.:** [http://projects.spring.io/spring-security-saml/](http://projects.spring.io/spring-security-saml/)
+
+---------
+
+## Changelog [new]
+
+- Version `2.4.0.RELEASE`:
+-- Update to Spring Boot `2.6.1`
+-- Update to JUnit `5`
+-- Update to Log4J `2.17.0` (see: [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228))
+-- Update to Jackson `2.13.0`
+-- Update to Apache Commons `4.4`
+-- A circular reference exists between the beans `samlEntryPoint` and `samlIDPDiscovery` that depends on the original design of the core *Spring SAML extension* library.
 
 ---------
 
@@ -56,7 +68,7 @@ docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:latest
 or compile the code and run the application with Maven:
 
 ```
-docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:2.3.1-mvn-jdk-8
+docker run -it --rm -p 8080:8080 -t vdenotaris/spring-saml-sp:2.4.0-mvn-jdk-8
 ```
 
 *Note: the related Docker image is publicly available on [Docker Hub](https://hub.docker.com/r/vdenotaris/spring-saml-sp/).*
@@ -108,7 +120,7 @@ To update the SSOCircle certificates within the keystore, just run:
 
 ### License
 
-    Copyright 2020 Vincenzo De Notaris
+    Copyright 2021 Vincenzo De Notaris
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
