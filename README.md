@@ -42,12 +42,12 @@ Thanks to *Vladimír Schäfer* ([github.com/vschafer](https://github.com/vschafe
 ## Changelog [new]
 
 - Version `2.4.0.RELEASE`:
--- Update to Spring Boot `2.6.1`
--- Update to JUnit `5`
--- Update to Log4J `2.17.0` (see: [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228))
--- Update to Jackson `2.13.0`
--- Update to Apache Commons `4.4`
--- A circular reference exists between the beans `samlEntryPoint` and `samlIDPDiscovery` that depends on the original design of the core *Spring SAML extension* library.
+	- Update to Spring Boot `2.6.1`
+	- Update to JUnit `5`
+	- Update to Log4J `2.17.0` (see: [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228))
+	- Update to Jackson `2.13.0`
+	- Update to Apache Commons `4.4`
+	- A circular reference exists between the beans `samlEntryPoint` and `samlIDPDiscovery` that depends on the original design of the core *Spring SAML extension* library.
 
 ---------
 
