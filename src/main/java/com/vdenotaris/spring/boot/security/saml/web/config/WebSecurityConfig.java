@@ -31,10 +31,14 @@ import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.StaticBasicParserPool;
+import org.opensaml.xml.security.BasicSecurityConfiguration;
+import org.opensaml.xml.signature.SignatureConstants;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -162,7 +166,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements I
     // Initialization of OpenSAML library
     @Bean
     public static SAMLBootstrap sAMLBootstrap() {
-        return new SAMLBootstrap();
+        return new SAMLBootstrap() {
+            @Override
+            public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+                super.postProcessBeanFactory(beanFactory);
+                BasicSecurityConfiguration config = (BasicSecurityConfiguration) org.opensaml.Configuration.getGlobalSecurityConfiguration();
+                config.registerSignatureAlgorithmURI("RSA", SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA256);
+            }
+
+        };
     }
  
     // Logger for SAML messages and events
